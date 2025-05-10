@@ -1,10 +1,10 @@
 import React from "react";
-import Login from "./components/Login";
+import Body from "./components/Body";
 
 const App = () => {
   return (
     <>
-      <Login />
+      <Body/>
     </>
   );
 };

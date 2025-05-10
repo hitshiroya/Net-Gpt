@@ -1,6 +1,10 @@
 # Netflix GPT
 
 - Created App and Clean up
+- Configure tailwind
+- Header
+- Login 
+- Sign up
 
 
 # Features
@@ -17,4 +21,4 @@
 - NetflixGPT
     - Search Bar
     - Movie Suggestions
-    
+
