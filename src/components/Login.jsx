@@ -1,17 +1,29 @@
-import React, { useState } from "react";
+import React, { useState ,useRef } from "react";
 import Header from "./Header";
+import { validateFormData } from "../utils/validateForm";
 
 const Login = () => {
   const [isLoginPage,setisLoginPage] = useState(true);
   const [username,setUsername] = useState("");
-  const [email,setEmail] = useState("");
-  const [password,setPassword] = useState("");
-  const [confirmPassword,setConfirmPassword] = useState("");
+  const [formErrorMessage,setFormErrorMessage] = useState("");
+
+  const email = useRef(null);
+  const password = useRef(null);
+  const confirmPassword = useRef(null);
+
 
   const handleToggle = (e) => {
     setisLoginPage(!isLoginPage);
     e.preventDefault();
   }
+
+  const handleFormSubmit = (e) => {
+    let error_message = validateFormData(email,password,confirmPassword);
+    setFormErrorMessage(error_message);
+    console.log(error_message)
+    e.preventDefault();
+  }
+  
 
   return (
     <>
@@ -42,21 +54,15 @@ const Login = () => {
           type="email"
           placeholder="Email or Phone number"
           className="p-2 my-4 w-full bg-gray-500 rounded-lg"
-          value={email}
-          onChange={(e)=> {
-            setEmail(e.target.value);
-            console.log(email)
-          }}
+          ref={email}
+          
         />
         <input
           type="password"
           placeholder="Password"
           className="p-2 my-4 w-full bg-gray-500 rounded-lg"
-          value={password}
-          onChange={(e)=> {
-            setPassword(e.target.value);
-            console.log(password)
-          }}
+          ref={password}
+          
         />
         {
           !isLoginPage &&
@@ -64,14 +70,14 @@ const Login = () => {
           type="password"
           placeholder="Confirm Password"
           className="p-2 my-4 w-full bg-gray-500 rounded-lg"
-          value={confirmPassword}
-          onChange={(e)=> {
-            setConfirmPassword(e.target.value);
-            console.log(confirmPassword)
-          }}
+          ref={confirmPassword}
+          
         />
         }
-        <button className="my-6 p-4 bg-red-700 w-full rounded-lg">
+        <p>{formErrorMessage}</p>
+        <button className="my-6 p-4 bg-red-700 w-full rounded-lg"
+        onClick={handleFormSubmit}
+        >
         {isLoginPage ? "Sign in" : "Sign Up" }
         </button>
         {isLoginPage ? <p>New to Netflix?<a href="" onClick={handleToggle}>Sign up now.</a></p> : <p>Welcome to Netflix.<a href="" onClick={handleToggle}>Sign in now.</a></p>}
