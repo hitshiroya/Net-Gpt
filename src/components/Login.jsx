@@ -1,7 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "./Header";
 
 const Login = () => {
+  const [isLoginPage,setisLoginPage] = useState(true);
+  const [username,setUsername] = useState("");
+  const [email,setEmail] = useState("");
+  const [password,setPassword] = useState("");
+  const [confirmPassword,setConfirmPassword] = useState("");
+
+  const handleToggle = (e) => {
+    setisLoginPage(!isLoginPage);
+    e.preventDefault();
+  }
+
   return (
     <>
       <Header />
@@ -13,21 +24,57 @@ const Login = () => {
       </div>
 
       <form className="w-3/12 p-12 bg-black absolute my-36 mx-auto right-0 left-0 text-white rounded-lg opacity-80">
-        <h1 className="font-bold text-3xl py-4">Sign in</h1>
+        <h1 className="font-bold text-3xl py-4">{isLoginPage ? "Sign in" : "Sign Up" }</h1>
+        {
+          !isLoginPage &&
+          <input
+          type="text"
+          placeholder="Username"
+          value={username}
+          className="p-2 my-4 w-full bg-gray-500 rounded-lg"
+          onChange={(e)=> {
+            setUsername(e.target.value);
+            console.log(username)
+          }}
+        />
+        }
         <input
           type="email"
           placeholder="Email or Phone number"
           className="p-2 my-4 w-full bg-gray-500 rounded-lg"
+          value={email}
+          onChange={(e)=> {
+            setEmail(e.target.value);
+            console.log(email)
+          }}
         />
         <input
           type="password"
           placeholder="Password"
           className="p-2 my-4 w-full bg-gray-500 rounded-lg"
+          value={password}
+          onChange={(e)=> {
+            setPassword(e.target.value);
+            console.log(password)
+          }}
         />
+        {
+          !isLoginPage &&
+          <input
+          type="password"
+          placeholder="Confirm Password"
+          className="p-2 my-4 w-full bg-gray-500 rounded-lg"
+          value={confirmPassword}
+          onChange={(e)=> {
+            setConfirmPassword(e.target.value);
+            console.log(confirmPassword)
+          }}
+        />
+        }
         <button className="my-6 p-4 bg-red-700 w-full rounded-lg">
-          Sign In
+        {isLoginPage ? "Sign in" : "Sign Up" }
         </button>
-        <p>New to Netflix?<a href="">Sign up now.</a></p>
+        {isLoginPage ? <p>New to Netflix?<a href="" onClick={handleToggle}>Sign up now.</a></p> : <p>Welcome to Netflix.<a href="" onClick={handleToggle}>Sign in now.</a></p>}
       </form>
     </>
   );
